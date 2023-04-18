@@ -1,0 +1,16 @@
+site_name: git rebase interactive 
+site_url: https://tobked.dev/git_rebase_interactive
+nav:
+    - Intro: index.md
+    - Foundations: foundations.md
+    - Rebase: rebase.md
+    - Rebase interactive: rebase_interactive.md
+    - Sources: sources.md
+theme: material
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences

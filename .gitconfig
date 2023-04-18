@@ -1,0 +1,2 @@
+[alias]
+	adog = log --all --decorate --oneline --graph --exclude=refs/remotes/origin/gh-pages,refs/heads/gh-pages
