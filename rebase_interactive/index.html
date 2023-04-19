@@ -1,0 +1,622 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tobked.dev/git_rebase_interactive/rebase_interactive/">
+      
+      
+        <link rel="prev" href="../rebase/">
+      
+      
+        <link rel="next" href="../sources/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.6">
+    
+    
+      
+        <title>Rebase interactive - git rebase interactive</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rebase" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="git rebase interactive" class="md-header__button md-logo" aria-label="git rebase interactive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            git rebase interactive
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rebase interactive
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="git rebase interactive" class="md-nav__button md-logo" aria-label="git rebase interactive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    git rebase interactive
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../foundations/" class="md-nav__link">
+        Foundations
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rebase/" class="md-nav__link">
+        Rebase
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Rebase interactive
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Rebase interactive
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rebase-interactive-in-action-basic" class="md-nav__link">
+    Rebase interactive in action (basic)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rebase-interactive-in-action-fixup" class="md-nav__link">
+    Rebase interactive in action (fixup!)
+  </a>
+  
+    <nav class="md-nav" aria-label="Rebase interactive in action (fixup!)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automate-fixup" class="md-nav__link">
+    Automate fixup!
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-life-example" class="md-nav__link">
+    Real life example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sources/" class="md-nav__link">
+        Sources
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rebase-interactive-in-action-basic" class="md-nav__link">
+    Rebase interactive in action (basic)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rebase-interactive-in-action-fixup" class="md-nav__link">
+    Rebase interactive in action (fixup!)
+  </a>
+  
+    <nav class="md-nav" aria-label="Rebase interactive in action (fixup!)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automate-fixup" class="md-nav__link">
+    Automate fixup!
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-life-example" class="md-nav__link">
+    Real life example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="rebase">Rebase</h1>
+<p><img alt="rebase interactive" src="https://wac-cdn.atlassian.com/dam/jcr:d01223a6-df25-48b3-87fd-2b9140d9ae2b/03%20Squash%20commits%20for%20a%20clean%20history.svg?cdnVersion=963" /></p>
+<p><em>source <a href="https://www.atlassian.com/git/tutorials/rewriting-history#git-rebase-i">https://www.atlassian.com/git/tutorials/rewriting-history#git-rebase-i</a></em></p>
+<div class="admonition quote">
+<p class="admonition-title">quote from <em><a href="https://www.atlassian.com/git/tutorials/rewriting-history#git-rebase-i">https://www.atlassian.com/git/tutorials/rewriting-history#git-rebase-i</a></em></p>
+<p>This gives you the opportunity to alter individual commits in the process, rather than moving all commits.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>fetch<span class="w"> </span>–all
+$<span class="w"> </span>git<span class="w"> </span>rebase<span class="w"> </span>-i<span class="w"> </span>origin/master<span class="w"> </span>--autostash
+</code></pre></div>
+</div>
+<h2 id="rebase-interactive-in-action-basic">Rebase interactive in action (basic)</h2>
+<p>What we get after <code>git rebase -i master</code>:</p>
+<div class="admonition info">
+<p class="admonition-title">git-rebase-todo</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>pick<span class="w"> </span>3648b69<span class="w"> </span>Meaningful<span class="w"> </span>message
+<span class="w">    </span>pick<span class="w"> </span>929dbs2<span class="w"> </span>Fix<span class="w"> </span>typo
+<span class="w">    </span>pick<span class="w"> </span>a9di923<span class="w"> </span>Another<span class="w"> </span>meaningful<span class="w"> </span>message
+<span class="w">    </span>pick<span class="w"> </span>k372b37<span class="w"> </span>Fix<span class="w"> </span>to<span class="w"> </span>previous<span class="w"> </span>typo<span class="w"> </span>fix
+
+<span class="w">    </span><span class="c1"># Rebase 12d65ea..k372b37 onto 12d65ea (4 commands)</span>
+<span class="w">    </span><span class="c1">#</span>
+<span class="w">    </span><span class="c1"># Commands:</span>
+<span class="w">    </span><span class="c1"># p, pick &lt;commit&gt; = use commit</span>
+<span class="w">    </span><span class="c1"># r, reword &lt;commit&gt; = use commit, but edit the commit message</span>
+<span class="w">    </span><span class="c1"># e, edit &lt;commit&gt; = use commit, but stop for amending</span>
+<span class="w">    </span><span class="c1"># s, squash &lt;commit&gt; = use commit, but meld into previous commit</span>
+<span class="w">    </span><span class="c1"># f, fixup [-C | -c] &lt;commit&gt; = like &quot;squash&quot; but keep only the previous</span>
+<span class="w">    </span><span class="c1">#                    commit&#39;s log message, unless -C is used, in which case</span>
+<span class="w">    </span><span class="c1">#                    keep only this commit&#39;s message; -c is same as -C but</span>
+<span class="w">    </span><span class="c1">#                    opens the editor**</span>
+<span class="w">    </span><span class="c1"># x, exec &lt;command&gt; = run command (the rest of the line) using shell</span>
+<span class="w">    </span><span class="c1"># b, break = stop here (continue rebase later with &#39;git rebase --continue&#39;)</span>
+<span class="w">    </span><span class="c1"># d, drop &lt;commit&gt; = remove commit</span>
+<span class="w">    </span><span class="c1"># l, label &lt;label&gt; = label current HEAD with a name</span>
+<span class="w">    </span><span class="c1"># t, reset &lt;label&gt; = reset HEAD to a label</span>
+<span class="w">    </span><span class="c1"># m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]</span>
+<span class="w">    </span><span class="c1">#         create a merge commit using the original merge commit&#39;s</span>
+<span class="w">    </span><span class="c1">#         message (or the oneline, if no original merge commit was</span>
+<span class="w">    </span><span class="c1">#         specified); use -c &lt;commit&gt; to reword the commit message</span>
+<span class="w">    </span><span class="c1"># u, update-ref &lt;ref&gt; = track a placeholder for the &lt;ref&gt; to be updated</span>
+<span class="w">    </span><span class="c1">#                       to this position in the new commits. The &lt;ref&gt; is</span>
+<span class="w">    </span><span class="c1">#                       updated at the end of the rebase</span>
+<span class="w">    </span><span class="c1">#</span>
+<span class="w">    </span><span class="c1"># These lines can be re-ordered; they are executed from top to bottom.</span>
+<span class="w">    </span><span class="c1">#</span>
+<span class="w">    </span><span class="c1"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
+<span class="w">    </span><span class="c1">#</span>
+<span class="w">    </span><span class="c1"># However, if you remove everything, the rebase will be aborted.</span>
+<span class="w">    </span><span class="c1">#</span>
+</code></pre></div>
+</div>
+<p>Commands like <code>pick</code>, <code>reword</code> or <code>edit</code> are self-explanatory, but let's focus on <code>squash</code> and <code>fixup</code>.
+We changed order of commits and edited commands to clear history.</p>
+<div class="admonition info">
+<p class="admonition-title">reordered commits</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>pick<span class="w">    </span>3648b69<span class="w"> </span>Meaningful<span class="w"> </span>message
+<span class="w">    </span>squash<span class="w">  </span>a9di923<span class="w"> </span>Another<span class="w"> </span>meaningful<span class="w"> </span>message
+<span class="w">    </span>pick<span class="w">    </span>929dbs2<span class="w"> </span>Fix<span class="w"> </span>typo
+<span class="w">    </span>fixup<span class="w">   </span>k372b37<span class="w"> </span>Fix<span class="w"> </span>to<span class="w"> </span>previous<span class="w"> </span>typo<span class="w"> </span>fix
+</code></pre></div>
+</div>
+<p>After saving it the window will be closed and we will be asked to edit commit message.</p>
+<div class="admonition info">
+<p class="admonition-title"><code>COMMIT_EDITMSG</code></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This is a combination of 2 commits.</span>
+<span class="c1"># This is the 1st commit message:</span>
+
+Meaningful<span class="w"> </span>message
+
+<span class="c1"># This is the commit message #2:</span>
+
+<span class="c1"># Another meaningful message</span>
+</code></pre></div>
+</div>
+<p>After editing it as <code>Brand new and more meaningful message</code> and saving it we are done. History of branch loos like this:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>bdog<span class="w"> </span>master
+*<span class="w"> </span>132df6e<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>feature/jira1234<span class="o">)</span><span class="w"> </span>Fix<span class="w"> </span>typo
+*<span class="w"> </span>cc0fe50<span class="w"> </span>Brand<span class="w"> </span>new<span class="w"> </span>and<span class="w"> </span>more<span class="w"> </span>meaningful<span class="w"> </span>message
+</code></pre></div>
+</div>
+<h2 id="rebase-interactive-in-action-fixup">Rebase interactive in action (fixup!)</h2>
+<p>Let's say we have two commits in our branch so far.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>bdog<span class="w"> </span>master
+*<span class="w"> </span>132df6e<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>feature/jira1234<span class="o">)</span><span class="w"> </span>Fix<span class="w"> </span>typo
+*<span class="w"> </span>cc0fe50<span class="w"> </span>Brand<span class="w"> </span>new<span class="w"> </span>and<span class="w"> </span>more<span class="w"> </span>meaningful<span class="w"> </span>message
+</code></pre></div>
+</div>
+<p>So last commit is <code>Fix typo</code>, but we see we have a lot of typos in our code.
+We want to fix them but also want to achieve two contradictory things:</p>
+<ul>
+<li>we want to keep (temporarily) all typo fixes in separate commits.</li>
+<li>we want to have clean history after we are done so we will <code>fixup</code> all commits into one.</li>
+</ul>
+<p>Let's see how we can do it and explain later.</p>
+<p>Let's start with fixup to the specific commit.</p>
+<div class="admonition info">
+<p class="admonition-title">Fixup to the specific commit</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># we did some typo fixes</span>
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span>--fixup<span class="w"> </span>132df6e
+</code></pre></div>
+</div>
+<p>We make another typo fixes and we want to fixup our last commit but we instead of checking hash of the commit we want to fixup we can use <code>@</code> (is just a synonym/alias/shortcut for the special Git reference <code>HEAD</code>).</p>
+<div class="admonition info">
+<p class="admonition-title">Fixups to the last commits</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># we did another typo fixes</span>
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span>--fixup<span class="w"> </span>@
+<span class="c1"># so many typos ...</span>
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span>--fixup<span class="w"> </span>@
+</code></pre></div>
+</div>
+<p>Enough typos, but our first commits needs some love too.</p>
+<div class="admonition info">
+<p class="admonition-title">Fixup to the specific commit</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># cc0fe50 Brand new and more meaningful message</span>
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-a<span class="w"> </span>--fixup<span class="w"> </span>cc0fe50
+</code></pre></div>
+</div>
+<p>This is how our <code>git-rebase-todo</code> history looks like now:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<div class="highlight"><pre><span></span><code>$ git rebase -i master
+
+pick cc0fe50 Brand new and more meaningful message
+pick 132df6e Fix typo
+pick 86c1657 fixup! Fix typo
+pick 0a3f0a2 fixup! fixup! Fix typo
+pick c15c724 fixup! Brand new and more meaningful message
+</code></pre></div>
+</div>
+<p>We can see the naming pattern but still manual editing is needed. 
+We are tired after fixing all those typos and we want to be done with it.</p>
+<p>This is what we want:</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>rebase<span class="w"> </span>-i<span class="w"> </span>master
+
+pick<span class="w"> </span>cc0fe50<span class="w"> </span>Brand<span class="w"> </span>new<span class="w"> </span>and<span class="w"> </span>more<span class="w"> </span>meaningful<span class="w"> </span>message
+fixup<span class="w"> </span>c15c724<span class="w"> </span>fixup!<span class="w"> </span>Brand<span class="w"> </span>new<span class="w"> </span>and<span class="w"> </span>more<span class="w"> </span>meaningful<span class="w"> </span>message
+pick<span class="w"> </span>132df6e<span class="w"> </span>Fix<span class="w"> </span>typo
+fixup<span class="w"> </span>86c1657<span class="w"> </span>fixup!<span class="w"> </span>Fix<span class="w"> </span>typo
+fixup<span class="w"> </span>0a3f0a2<span class="w"> </span>fixup!<span class="w"> </span>fixup!<span class="w"> </span>Fix<span class="w"> </span>typo
+</code></pre></div>
+</div>
+<h3 id="automate-fixup">Automate fixup!</h3>
+<p>We can automate this process by using <code>git rebase -i master --autosquash</code>.
+When use this command we will get the same result as above but without manual editing.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<div class="highlight"><pre><span></span><code>$ git rebase -i master --autosquash
+
+pick cc0fe50 Brand new and more meaningful message
+fixup c15c724 fixup! Brand new and more meaningful message
+pick 132df6e Fix typo
+fixup 86c1657 fixup! Fix typo
+fixup 0a3f0a2 fixup! fixup! Fix typo
+</code></pre></div>
+</div>
+<p>Everything in order, everything is fixed, we are done, we can move on.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<div class="highlight"><pre><span></span><code>$ git bdog master
+
+pick 7a76c69 Brand new and more meaningful message
+pick a4003d8 Fix typo
+</code></pre></div>
+</div>
+<h3 id="real-life-example">Real life example</h3>
+<p><img alt="example" src="../img/example.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  </body>
+</html>
